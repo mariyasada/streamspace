@@ -7,8 +7,8 @@ try{
     await axios.post(" https://eo5o8y4opus393f.m.pipedream.net/webhook_72ha8",
    {
     headers: {
-    'Hello': 'Demo',
-    'Content-Type': 'application/json'
+    'Hello': 'try to implement post request',
+    'Content-Type': `${formData.contentType}`
   },
   data:data
 }).then(response=>{
