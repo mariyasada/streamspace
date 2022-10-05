@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { contentType, fieldData, initialData } from "../constants";
+import { initialData } from "../constants";
 import { BsPlusCircle } from "react-icons/bs";
 import { BiMinusCircle } from "react-icons/bi";
 import { v4 as uuidv4 } from "uuid";
 import { postData } from "./postData";
 import toast from "react-hot-toast";
+import { FormField } from "../FormField";
+import { UrlParameterField } from "../UrlParameterField";
+import UpperDivConfig from "../UpperDiv";
 
 export const Formpage = () => {
   const [inputFieldData, setInputFieldData] = useState([
@@ -93,63 +96,10 @@ export const Formpage = () => {
         <p className="gray-text">
           Send data collected through forms to other services.
         </p>
-        <div className="radio-btns-div">
-          <div className="radio-div flex-center">
-            <label htmlFor="Webhook Status">Webhook Status</label>
-            <span className="btns">
-              <label htmlFor="Enable">
-                <input
-                  type="radio"
-                  name="status"
-                  value="true"
-                  id="Enable"
-                  onChange={handleFormChange}
-                />
-                Enable
-              </label>
-              <label htmlFor="Disable">
-                <input
-                  type="radio"
-                  name="status"
-                  value="false"
-                  onChange={handleFormChange}
-                  id="Disable"
-                />
-                Disable
-              </label>
-            </span>
-          </div>
-          <span className="inputs-div flex-center flex-column">
-            <label htmlFor="Webhook URL">
-              Webhook URL
-              <input
-                type="text"
-                className="ml-3 width"
-                name="url"
-                value={formData.url}
-                onChange={handleFormChange}
-              />
-            </label>
-            <label htmlFor="Webhook URL justify-start">
-              Content Type
-              <select
-                className="ml-3 width"
-                name="contentType"
-                id="contentType"
-                value={formData.contentType}
-                onChange={handleFormChange}
-                required
-              >
-                <option value=""></option>
-                {contentType.map((item) => (
-                  <option key={item} value={item} name={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </span>
-        </div>
+        <UpperDivConfig
+          formData={formData}
+          handleFormChange={handleFormChange}
+        />
       </div>
       {/* middle div */}
       <div className="middle-div">
@@ -164,30 +114,10 @@ export const Formpage = () => {
                 className="field-form flex-center justify-start"
                 key={inputField.id}
               >
-                <input
-                  type="text"
-                  className="width ml-3"
-                  name="key"
-                  label="key"
-                  variant="filled"
-                  value={inputField.key}
-                  onChange={(e) => handleOnChange(inputField.id, e)}
+                <FormField
+                  inputField={inputField}
+                  handleOnChange={handleOnChange}
                 />
-                <select
-                  className="selectinput"
-                  name="value"
-                  id="value"
-                  onChange={(e) => handleOnChange(inputField.id, e)}
-                  value={inputField.value}
-                  required
-                >
-                  <option value=""></option>
-                  {fieldData.map((item) => (
-                    <option key={item} value={item} name={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
                 <span className="btns-plus flex-center">
                   <BsPlusCircle
                     style={{ color: "green" }}
@@ -212,19 +142,9 @@ export const Formpage = () => {
                 className="url-params flex-center justify-start"
                 key={data.id}
               >
-                <input
-                  type="text"
-                  className="width ml-3"
-                  name="key"
-                  value={data.key}
-                  onChange={(e) => handleOnChange(data.id, e)}
-                />
-                <input
-                  type="text"
-                  style={{ width: "50%" }}
-                  name="value"
-                  onChange={(e) => handleOnChange(data.id, e)}
-                  value={data.value}
+                <UrlParameterField
+                  data={data}
+                  handleOnChange={handleOnChange}
                 />
                 <span className="btns-plus flex-center">
                   <BsPlusCircle
